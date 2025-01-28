@@ -21,12 +21,14 @@ namespace RecipeWinForms
         }
 
         private void BtnSearch_Click(object? sender, EventArgs e)
-        { 
+        {
+            string recipename = txtRecipename.Text;
         }
 
         private void SearchForRecipe(string recipetype )
         {
             string sql = "select * from recipe r where";
+            DataTable dt = GetDataTable(sql);
         }
 
         private string GetConnectionString( )

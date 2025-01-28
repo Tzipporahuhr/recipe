@@ -30,7 +30,7 @@
         {
             tblMain = new TableLayoutPanel();
             tblOptions = new TableLayoutPanel();
-            txtSearch = new TextBox();
+            txtRecipename = new TextBox();
             btnSearch = new Button();
             gRecipe = new DataGridView();
             tblMain.SuspendLayout();
@@ -59,7 +59,7 @@
             tblOptions.ColumnCount = 2;
             tblOptions.ColumnStyles.Add(new ColumnStyle());
             tblOptions.ColumnStyles.Add(new ColumnStyle());
-            tblOptions.Controls.Add(txtSearch, 0, 0);
+            tblOptions.Controls.Add(txtRecipename, 0, 0);
             tblOptions.Controls.Add(btnSearch, 1, 0);
             tblOptions.Location = new Point(3, 3);
             tblOptions.Name = "tblOptions";
@@ -68,14 +68,14 @@
             tblOptions.Size = new Size(231, 48);
             tblOptions.TabIndex = 0;
             // 
-            // txtSearch
+            // txtRecipename
             // 
-            txtSearch.Dock = DockStyle.Fill;
-            txtSearch.Font = new Font("Segoe UI", 18F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            txtSearch.Location = new Point(3, 3);
-            txtSearch.Name = "txtSearch";
-            txtSearch.Size = new Size(91, 39);
-            txtSearch.TabIndex = 0;
+            txtRecipename.Dock = DockStyle.Fill;
+            txtRecipename.Font = new Font("Segoe UI", 18F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            txtRecipename.Location = new Point(3, 3);
+            txtRecipename.Name = "txtRecipename";
+            txtRecipename.Size = new Size(91, 39);
+            txtRecipename.TabIndex = 0;
             // 
             // btnSearch
             // 
@@ -116,7 +116,7 @@
 
         private TableLayoutPanel tblMain;
         private TableLayoutPanel tblOptions;
-        private TextBox txtSearch;
+        private TextBox txtRecipename;
         private Button btnSearch;
         private DataGridView gRecipe;
     }
