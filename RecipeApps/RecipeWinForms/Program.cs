@@ -1,3 +1,5 @@
+using CPUFramework;
+
 namespace RecipeWinForms
 {
     internal static class Program
@@ -11,6 +13,7 @@ namespace RecipeWinForms
             // To customize application configuration such as set high DPI settings or default font,
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
+           
             Application.Run(new frmSearch());
         }
     }
