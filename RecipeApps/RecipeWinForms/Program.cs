@@ -13,7 +13,7 @@ namespace RecipeWinForms
             // To customize application configuration such as set high DPI settings or default font,
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
-           
+           SQLUtility.ConnectionString = "Server=tcp:tzipporahuhr-cpu.database.windows.net,1433;Initial Catalog=RecipeDB;Persist Security Info=False;User ID=tzipporahuhr;Password=Recipe123;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
             Application.Run(new frmSearch());
         }
     }
