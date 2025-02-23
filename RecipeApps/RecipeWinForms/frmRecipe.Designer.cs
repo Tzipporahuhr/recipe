@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmRecipe));
             tblMain = new TableLayoutPanel();
             lblStaff = new Label();
             lblCuisine = new Label();
@@ -38,8 +39,7 @@
             lblDateArchived = new Label();
             lblRecipePic = new Label();
             lblRecipeStatus = new Label();
-            lblstaff2 = new Label();
-            lblCuisine2 = new Label();
+            lblFirstName = new Label();
             txtRecipeName = new TextBox();
             txtCalories = new TextBox();
             txtDateDrafted = new TextBox();
@@ -47,7 +47,14 @@
             txtDateArchived = new TextBox();
             txtRecipePic = new TextBox();
             txtRecipeStatus = new TextBox();
+            lstCuisineName = new ComboBox();
+            tsMain = new ToolStrip();
+            btnSave = new ToolStripButton();
+            toolStripSeparator1 = new ToolStripSeparator();
+            btnDelete = new ToolStripButton();
+            toolStripSeparator2 = new ToolStripSeparator();
             tblMain.SuspendLayout();
+            tsMain.SuspendLayout();
             SuspendLayout();
             // 
             // tblMain
@@ -64,8 +71,7 @@
             tblMain.Controls.Add(lblDateArchived, 0, 6);
             tblMain.Controls.Add(lblRecipePic, 0, 7);
             tblMain.Controls.Add(lblRecipeStatus, 0, 8);
-            tblMain.Controls.Add(lblstaff2, 1, 0);
-            tblMain.Controls.Add(lblCuisine2, 1, 1);
+            tblMain.Controls.Add(lblFirstName, 1, 0);
             tblMain.Controls.Add(txtRecipeName, 1, 2);
             tblMain.Controls.Add(txtCalories, 1, 3);
             tblMain.Controls.Add(txtDateDrafted, 1, 4);
@@ -73,8 +79,8 @@
             tblMain.Controls.Add(txtDateArchived, 1, 6);
             tblMain.Controls.Add(txtRecipePic, 1, 7);
             tblMain.Controls.Add(txtRecipeStatus, 1, 8);
-            tblMain.Dock = DockStyle.Fill;
-            tblMain.Location = new Point(0, 0);
+            tblMain.Controls.Add(lstCuisineName, 1, 1);
+            tblMain.Location = new Point(0, 31);
             tblMain.Name = "tblMain";
             tblMain.RowCount = 9;
             tblMain.RowStyles.Add(new RowStyle(SizeType.Absolute, 40F));
@@ -86,7 +92,7 @@
             tblMain.RowStyles.Add(new RowStyle(SizeType.Absolute, 40F));
             tblMain.RowStyles.Add(new RowStyle(SizeType.Absolute, 40F));
             tblMain.RowStyles.Add(new RowStyle(SizeType.Absolute, 40F));
-            tblMain.Size = new Size(266, 360);
+            tblMain.Size = new Size(342, 380);
             tblMain.TabIndex = 0;
             // 
             // lblStaff
@@ -179,30 +185,20 @@
             lblRecipeStatus.TabIndex = 8;
             lblRecipeStatus.Text = "RecipeStatus";
             // 
-            // lblstaff2
+            // lblFirstName
             // 
-            lblstaff2.BackColor = Color.WhiteSmoke;
-            lblstaff2.BorderStyle = BorderStyle.FixedSingle;
-            lblstaff2.Dock = DockStyle.Fill;
-            lblstaff2.Location = new Point(125, 0);
-            lblstaff2.Name = "lblstaff2";
-            lblstaff2.Size = new Size(138, 40);
-            lblstaff2.TabIndex = 9;
-            // 
-            // lblCuisine2
-            // 
-            lblCuisine2.BackColor = Color.WhiteSmoke;
-            lblCuisine2.BorderStyle = BorderStyle.FixedSingle;
-            lblCuisine2.Dock = DockStyle.Fill;
-            lblCuisine2.Location = new Point(125, 40);
-            lblCuisine2.Name = "lblCuisine2";
-            lblCuisine2.Size = new Size(138, 40);
-            lblCuisine2.TabIndex = 10;
+            lblFirstName.BackColor = Color.WhiteSmoke;
+            lblFirstName.BorderStyle = BorderStyle.FixedSingle;
+            lblFirstName.Dock = DockStyle.Fill;
+            lblFirstName.Location = new Point(201, 0);
+            lblFirstName.Name = "lblFirstName";
+            lblFirstName.Size = new Size(138, 40);
+            lblFirstName.TabIndex = 9;
             // 
             // txtRecipeName
             // 
             txtRecipeName.Dock = DockStyle.Fill;
-            txtRecipeName.Location = new Point(125, 83);
+            txtRecipeName.Location = new Point(201, 83);
             txtRecipeName.Name = "txtRecipeName";
             txtRecipeName.Size = new Size(138, 29);
             txtRecipeName.TabIndex = 11;
@@ -210,7 +206,7 @@
             // txtCalories
             // 
             txtCalories.Dock = DockStyle.Fill;
-            txtCalories.Location = new Point(125, 123);
+            txtCalories.Location = new Point(201, 123);
             txtCalories.Name = "txtCalories";
             txtCalories.Size = new Size(138, 29);
             txtCalories.TabIndex = 12;
@@ -218,7 +214,7 @@
             // txtDateDrafted
             // 
             txtDateDrafted.Dock = DockStyle.Fill;
-            txtDateDrafted.Location = new Point(125, 163);
+            txtDateDrafted.Location = new Point(201, 163);
             txtDateDrafted.Name = "txtDateDrafted";
             txtDateDrafted.Size = new Size(138, 29);
             txtDateDrafted.TabIndex = 13;
@@ -226,7 +222,7 @@
             // txtDatePublished
             // 
             txtDatePublished.Dock = DockStyle.Fill;
-            txtDatePublished.Location = new Point(125, 203);
+            txtDatePublished.Location = new Point(201, 203);
             txtDatePublished.Name = "txtDatePublished";
             txtDatePublished.Size = new Size(138, 29);
             txtDatePublished.TabIndex = 14;
@@ -234,7 +230,7 @@
             // txtDateArchived
             // 
             txtDateArchived.Dock = DockStyle.Fill;
-            txtDateArchived.Location = new Point(125, 243);
+            txtDateArchived.Location = new Point(201, 243);
             txtDateArchived.Name = "txtDateArchived";
             txtDateArchived.Size = new Size(138, 29);
             txtDateArchived.TabIndex = 15;
@@ -242,7 +238,7 @@
             // txtRecipePic
             // 
             txtRecipePic.Dock = DockStyle.Fill;
-            txtRecipePic.Location = new Point(125, 283);
+            txtRecipePic.Location = new Point(201, 283);
             txtRecipePic.Name = "txtRecipePic";
             txtRecipePic.Size = new Size(138, 29);
             txtRecipePic.TabIndex = 16;
@@ -250,16 +246,63 @@
             // txtRecipeStatus
             // 
             txtRecipeStatus.Dock = DockStyle.Fill;
-            txtRecipeStatus.Location = new Point(125, 323);
+            txtRecipeStatus.Location = new Point(201, 323);
             txtRecipeStatus.Name = "txtRecipeStatus";
             txtRecipeStatus.Size = new Size(138, 29);
             txtRecipeStatus.TabIndex = 17;
+            // 
+            // lstCuisineName
+            // 
+            lstCuisineName.FormattingEnabled = true;
+            lstCuisineName.Location = new Point(201, 43);
+            lstCuisineName.Name = "lstCuisineName";
+            lstCuisineName.Size = new Size(138, 29);
+            lstCuisineName.TabIndex = 18;
+            // 
+            // tsMain
+            // 
+            tsMain.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            tsMain.Items.AddRange(new ToolStripItem[] { btnSave, toolStripSeparator1, btnDelete, toolStripSeparator2 });
+            tsMain.Location = new Point(0, 0);
+            tsMain.Name = "tsMain";
+            tsMain.Size = new Size(354, 28);
+            tsMain.TabIndex = 1;
+            tsMain.Text = "toolStrip1";
+            // 
+            // btnSave
+            // 
+            btnSave.DisplayStyle = ToolStripItemDisplayStyle.Text;
+            btnSave.Image = (Image)resources.GetObject("btnSave.Image");
+            btnSave.ImageTransparentColor = Color.Magenta;
+            btnSave.Name = "btnSave";
+            btnSave.Size = new Size(47, 25);
+            btnSave.Text = "&Save";
+            // 
+            // toolStripSeparator1
+            // 
+            toolStripSeparator1.Name = "toolStripSeparator1";
+            toolStripSeparator1.Size = new Size(6, 28);
+            // 
+            // btnDelete
+            // 
+            btnDelete.DisplayStyle = ToolStripItemDisplayStyle.Text;
+            btnDelete.Image = (Image)resources.GetObject("btnDelete.Image");
+            btnDelete.ImageTransparentColor = Color.Magenta;
+            btnDelete.Name = "btnDelete";
+            btnDelete.Size = new Size(58, 25);
+            btnDelete.Text = "&Delete";
+            // 
+            // toolStripSeparator2
+            // 
+            toolStripSeparator2.Name = "toolStripSeparator2";
+            toolStripSeparator2.Size = new Size(6, 28);
             // 
             // frmRecipe
             // 
             AutoScaleDimensions = new SizeF(9F, 21F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(266, 360);
+            ClientSize = new Size(354, 447);
+            Controls.Add(tsMain);
             Controls.Add(tblMain);
             Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             Margin = new Padding(4);
@@ -267,7 +310,10 @@
             Text = "Recipe";
             tblMain.ResumeLayout(false);
             tblMain.PerformLayout();
+            tsMain.ResumeLayout(false);
+            tsMain.PerformLayout();
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
@@ -282,8 +328,7 @@
         private Label lblDateArchived;
         private Label lblRecipePic;
         private Label lblRecipeStatus;
-        private Label lblstaff2;
-        private Label lblCuisine2;
+        private Label lblFirstName;
         private TextBox txtRecipeName;
         private TextBox txtCalories;
         private TextBox txtDateDrafted;
@@ -291,5 +336,11 @@
         private TextBox txtDateArchived;
         private TextBox txtRecipePic;
         private TextBox txtRecipeStatus;
+        private ToolStrip tsMain;
+        private ToolStripButton btnSave;
+        private ToolStripSeparator toolStripSeparator1;
+        private ToolStripButton btnDelete;
+        private ToolStripSeparator toolStripSeparator2;
+        private ComboBox lstCuisineName;
     }
 }

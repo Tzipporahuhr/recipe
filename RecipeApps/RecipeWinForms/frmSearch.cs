@@ -2,6 +2,7 @@
 using System.Data.SqlClient;
 using CPUFramework;
 using Microsoft.VisualBasic.ApplicationServices;
+using CPUWindowsFormFramework;
 namespace RecipeWinForms
 {
     public partial class frmSearch : Form
@@ -11,7 +12,7 @@ namespace RecipeWinForms
             InitializeComponent();
 
             btnSearch.Click += BtnSearch_Click;
-            FormatGrid();
+            WindowsFormsUtility.FormatGridForSearchResults(gRecipe);
             gRecipe.CellDoubleClick += GRecipe_CellDoubleClick;
         }
 
@@ -31,13 +32,7 @@ namespace RecipeWinForms
             frmRecipe frm = new frmRecipe();
             frm.ShowForm(id);
         }
-        private void FormatGrid()
-        {
-            gRecipe.AllowUserToAddRows = false;
-            gRecipe.ReadOnly = true;
-            gRecipe.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
-            gRecipe.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-        }
+      
 
         private void GRecipe_CellDoubleClick(object? sender, DataGridViewCellEventArgs e)
         {
