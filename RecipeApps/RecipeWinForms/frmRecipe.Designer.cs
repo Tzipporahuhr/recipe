@@ -73,8 +73,7 @@
             tblMain.Controls.Add(txtDateArchived, 1, 6);
             tblMain.Controls.Add(txtRecipePic, 1, 7);
             tblMain.Controls.Add(txtRecipeStatus, 1, 8);
-            tblMain.Dock = DockStyle.Fill;
-            tblMain.Location = new Point(0, 0);
+            tblMain.Location = new Point(0, 39);
             tblMain.Name = "tblMain";
             tblMain.RowCount = 9;
             tblMain.RowStyles.Add(new RowStyle(SizeType.Absolute, 40F));
@@ -86,7 +85,7 @@
             tblMain.RowStyles.Add(new RowStyle(SizeType.Absolute, 40F));
             tblMain.RowStyles.Add(new RowStyle(SizeType.Absolute, 40F));
             tblMain.RowStyles.Add(new RowStyle(SizeType.Absolute, 40F));
-            tblMain.Size = new Size(266, 360);
+            tblMain.Size = new Size(378, 321);
             tblMain.TabIndex = 0;
             // 
             // lblStaff
@@ -184,7 +183,7 @@
             lblstaff2.BackColor = Color.WhiteSmoke;
             lblstaff2.BorderStyle = BorderStyle.FixedSingle;
             lblstaff2.Dock = DockStyle.Fill;
-            lblstaff2.Location = new Point(125, 0);
+            lblstaff2.Location = new Point(237, 0);
             lblstaff2.Name = "lblstaff2";
             lblstaff2.Size = new Size(138, 40);
             lblstaff2.TabIndex = 9;
@@ -194,7 +193,7 @@
             lblCuisine2.BackColor = Color.WhiteSmoke;
             lblCuisine2.BorderStyle = BorderStyle.FixedSingle;
             lblCuisine2.Dock = DockStyle.Fill;
-            lblCuisine2.Location = new Point(125, 40);
+            lblCuisine2.Location = new Point(237, 40);
             lblCuisine2.Name = "lblCuisine2";
             lblCuisine2.Size = new Size(138, 40);
             lblCuisine2.TabIndex = 10;
@@ -202,7 +201,7 @@
             // txtRecipeName
             // 
             txtRecipeName.Dock = DockStyle.Fill;
-            txtRecipeName.Location = new Point(125, 83);
+            txtRecipeName.Location = new Point(237, 83);
             txtRecipeName.Name = "txtRecipeName";
             txtRecipeName.Size = new Size(138, 29);
             txtRecipeName.TabIndex = 11;
@@ -210,7 +209,7 @@
             // txtCalories
             // 
             txtCalories.Dock = DockStyle.Fill;
-            txtCalories.Location = new Point(125, 123);
+            txtCalories.Location = new Point(237, 123);
             txtCalories.Name = "txtCalories";
             txtCalories.Size = new Size(138, 29);
             txtCalories.TabIndex = 12;
@@ -218,7 +217,7 @@
             // txtDateDrafted
             // 
             txtDateDrafted.Dock = DockStyle.Fill;
-            txtDateDrafted.Location = new Point(125, 163);
+            txtDateDrafted.Location = new Point(237, 163);
             txtDateDrafted.Name = "txtDateDrafted";
             txtDateDrafted.Size = new Size(138, 29);
             txtDateDrafted.TabIndex = 13;
@@ -226,7 +225,7 @@
             // txtDatePublished
             // 
             txtDatePublished.Dock = DockStyle.Fill;
-            txtDatePublished.Location = new Point(125, 203);
+            txtDatePublished.Location = new Point(237, 203);
             txtDatePublished.Name = "txtDatePublished";
             txtDatePublished.Size = new Size(138, 29);
             txtDatePublished.TabIndex = 14;
@@ -234,7 +233,7 @@
             // txtDateArchived
             // 
             txtDateArchived.Dock = DockStyle.Fill;
-            txtDateArchived.Location = new Point(125, 243);
+            txtDateArchived.Location = new Point(237, 243);
             txtDateArchived.Name = "txtDateArchived";
             txtDateArchived.Size = new Size(138, 29);
             txtDateArchived.TabIndex = 15;
@@ -242,7 +241,7 @@
             // txtRecipePic
             // 
             txtRecipePic.Dock = DockStyle.Fill;
-            txtRecipePic.Location = new Point(125, 283);
+            txtRecipePic.Location = new Point(237, 283);
             txtRecipePic.Name = "txtRecipePic";
             txtRecipePic.Size = new Size(138, 29);
             txtRecipePic.TabIndex = 16;
@@ -250,7 +249,7 @@
             // txtRecipeStatus
             // 
             txtRecipeStatus.Dock = DockStyle.Fill;
-            txtRecipeStatus.Location = new Point(125, 323);
+            txtRecipeStatus.Location = new Point(237, 323);
             txtRecipeStatus.Name = "txtRecipeStatus";
             txtRecipeStatus.Size = new Size(138, 29);
             txtRecipeStatus.TabIndex = 17;
@@ -259,7 +258,7 @@
             // 
             AutoScaleDimensions = new SizeF(9F, 21F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(266, 360);
+            ClientSize = new Size(380, 411);
             Controls.Add(tblMain);
             Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             Margin = new Padding(4);
