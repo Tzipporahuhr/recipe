@@ -13,10 +13,16 @@ namespace RecipeWinForms
 {
     public partial class frmRecipe : Form
     {
+        DataTable dtRecipe;
         public frmRecipe()
         {
             InitializeComponent();
+            btnSave.Click += BtnSave_Click;
+            btnDelete.Click += BtnDelete_Click;
+            
         }
+
+      
 
         public void ShowForm(int recipeid)
         {
@@ -24,18 +30,78 @@ namespace RecipeWinForms
  
     "select   r.*, c.CuisineName, s.FirstName from Recipe r join Staff s on r.StaffId= s.StaffId join Cuisine c on r.CuisineId= c.CuisineId  where r.RecipeId=" + recipeid.ToString();
 
-     DataTable dt = SQLUtility.GetDataTable(sql);
-           lblstaff2.DataBindings.Add("Text", dt, "FirstName");
-           lblCuisine2.DataBindings.Add("Text", dt, "CuisineName");
-           txtRecipeName.DataBindings.Add("Text", dt, "RecipeName");
-           txtCalories.DataBindings.Add("Text", dt, "Calories");
-           txtDateDrafted.DataBindings.Add("Text", dt, "DateDrafted");
-           txtDatePublished.DataBindings.Add("Text", dt, "DatePublished");
-           txtDateArchived.DataBindings.Add("Text", dt, "DateArchived");
-           txtRecipePic.DataBindings.Add("Text", dt, "RecipePic");
-           txtRecipeStatus.DataBindings.Add("Text", dt, "RecipeStatus");
+           dtRecipe = SQLUtility.GetDataTable(sql);
+             
+             SetControlBinding(lblLastName, dtRecipe);
+            SetControlBinding(lblCuisineName, dtRecipe);
+            SetControlBinding(txtRecipeName, dtRecipe);
+            SetControlBinding(txtDateDrafted, dtRecipe);
+            SetControlBinding(txtDatePublished, dtRecipe);
+            SetControlBinding(txtDateArchived, dtRecipe);
+            SetControlBinding(txtRecipePic, dtRecipe);
+            SetControlBinding(txtRecipeStatus, dtRecipe);
+           
 
             this.Show();
         }
+
+        public void SetControlBinding(Control ctrl, DataTable dtRecipe)
+        {
+            string propertyname = "";
+            string columname = "";
+
+            if (ctrl.Name == "lblLastName")
+            {
+                columname = "FirstName";
+                propertyname = "Text";
+            }
+
+            else if (ctrl.Name == "lblCuisineName")
+            {
+                columname = "CuisineName";
+                propertyname = "Text";
+
+            }
+            else
+            {
+
+
+                string controlname = ctrl.Name.ToLower();
+
+                if (controlname.StartsWith("txt") || controlname.StartsWith("lbl"))
+                {
+                    propertyname = "Text";
+                    columname = controlname.Substring(3);
+                }
+            }
+            if (propertyname != "" && columname!= "")
+            {
+                ctrl.DataBindings.Add(propertyname, dtRecipe, columname, true, DataSourceUpdateMode.OnPropertyChanged);
+            }
+            
+        }
+
+        private void Save()
+        {
+            SQLUtility.DebugPrintDataTable(dtRecipe);
+        }
+
+        private void Delete()
+        {
+
+        }
+
+        private void BtnDelete_Click(object? sender, EventArgs e)
+        {
+             Delete();
+        }
+
+        private void BtnSave_Click(object? sender, EventArgs e)
+        {
+            Save();
+        }
     }
+
+
+
 }
