@@ -3,97 +3,68 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using CPUWindowsFormFramework;
+using RecipeSystem;
 
 namespace RecipeWinForms
 {
     public partial class frmRecipe : Form
     {
-        DataTable dtRecipe;
+        DataTable dtrecipe;
         public frmRecipe()
         {
             InitializeComponent();
+
             btnSave.Click += BtnSave_Click;
             btnDelete.Click += BtnDelete_Click;
-            
         }
 
-      
+    
 
         public void ShowForm(int recipeid)
         {
-    string sql =
- 
-    "select   r.*, c.CuisineName, s.FirstName from Recipe r join Staff s on r.StaffId= s.StaffId join Cuisine c on r.CuisineId= c.CuisineId  where r.RecipeId=" + recipeid.ToString();
+    
 
-           dtRecipe = SQLUtility.GetDataTable(sql);
-             
-             SetControlBinding(lblLastName, dtRecipe);
-            SetControlBinding(lblCuisineName, dtRecipe);
-            SetControlBinding(txtRecipeName, dtRecipe);
-            SetControlBinding(txtDateDrafted, dtRecipe);
-            SetControlBinding(txtDatePublished, dtRecipe);
-            SetControlBinding(txtDateArchived, dtRecipe);
-            SetControlBinding(txtRecipePic, dtRecipe);
-            SetControlBinding(txtRecipeStatus, dtRecipe);
+             dtrecipe = Recipe.Load(recipeid);
+
+            DataTable dtCuisines = Recipe.GetCuisineList();
+            WindowsFormsUtility.SetListBinding(lstCuisineName, dtCuisines, dtrecipe, "Cuisine");
+            WindowsFormsUtility.SetControlBinding(lblFirstName, dtrecipe);
+           
+            WindowsFormsUtility.SetControlBinding(txtRecipeName, dtrecipe);
+            WindowsFormsUtility.SetControlBinding(txtCalories, dtrecipe);
+            WindowsFormsUtility.SetControlBinding(txtDateDrafted, dtrecipe);
+            WindowsFormsUtility.SetControlBinding(txtDatePublished, dtrecipe);
+            WindowsFormsUtility.SetControlBinding(txtDateArchived, dtrecipe);
+            WindowsFormsUtility.SetControlBinding(txtRecipePic, dtrecipe);
+            WindowsFormsUtility.SetControlBinding(txtRecipeStatus, dtrecipe);
            
 
             this.Show();
         }
 
-        public void SetControlBinding(Control ctrl, DataTable dtRecipe)
-        {
-            string propertyname = "";
-            string columname = "";
-
-            if (ctrl.Name == "lblLastName")
-            {
-                columname = "FirstName";
-                propertyname = "Text";
-            }
-
-            else if (ctrl.Name == "lblCuisineName")
-            {
-                columname = "CuisineName";
-                propertyname = "Text";
-
-            }
-            else
-            {
-
-
-                string controlname = ctrl.Name.ToLower();
-
-                if (controlname.StartsWith("txt") || controlname.StartsWith("lbl"))
-                {
-                    propertyname = "Text";
-                    columname = controlname.Substring(3);
-                }
-            }
-            if (propertyname != "" && columname!= "")
-            {
-                ctrl.DataBindings.Add(propertyname, dtRecipe, columname, true, DataSourceUpdateMode.OnPropertyChanged);
-            }
-            
-        }
-
+      
         private void Save()
         {
-            SQLUtility.DebugPrintDataTable(dtRecipe);
+            Recipe.Save(dtrecipe);
+            this.Close();
         }
 
         private void Delete()
         {
-
+           Recipe.Delete(dtrecipe);
+            this.Close();
         }
 
         private void BtnDelete_Click(object? sender, EventArgs e)
         {
-             Delete();
+            Delete();
         }
 
         private void BtnSave_Click(object? sender, EventArgs e)
@@ -101,7 +72,4 @@ namespace RecipeWinForms
             Save();
         }
     }
-
-
-
 }
