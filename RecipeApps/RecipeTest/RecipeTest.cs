@@ -84,14 +84,14 @@ namespace RecipeTest
             TestContext.WriteLine("Ensure that num of rows return by app matches " + cuisinecount);
 
 
-            DataTable dt = Recipe.GetCuisineList();
+           DataTable dt = Recipe.GetCuisineList();
             ClassicAssert.IsTrue(dt.Rows.Count ==cuisinecount, "num rows returned by app (" + dt.Rows.Count+")<>" + cuisinecount);
             TestContext.WriteLine("Number of rows in Cuisines returned by app=" + dt.Rows.Count);
         }
 
         private int GetExistingRecipeId()
         {
-           return SQLUtility.GetFirstColumnFirstRowValue("select top 1 RecipeId from recipe");
+            return SQLUtility.GetFirstColumnFirstRowValue("select top 1 RecipeId from recipe");
         }
     }
 }
