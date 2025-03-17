@@ -4,7 +4,7 @@ begin
 	 select r.RecipeId, r.StaffId, r.CuisineId,  r.RecipeName, r.Calories, r.DateDrafted, r.DatePublished, r.DateArchived, r.RecipePic, r.RecipeStatus
 	 from Recipe r
 	 where r.RecipeId=@RecipeId
-	 and r.RecipeName like '%' + @RecipeName + '%'
+	 or r.RecipeName like '%' + @RecipeName + '%'
 	 or @All=1
 	 order by r.RecipeName, r.Calories, r.DateDrafted, r.DatePublished, r.DateArchived, r.RecipePic, r.RecipeStatus
 end

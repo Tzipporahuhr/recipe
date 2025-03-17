@@ -1,3 +1,4 @@
+using NUnit.Framework.Legacy;
 using System.Data;
 
 namespace RecipeTest
@@ -30,7 +31,7 @@ namespace RecipeTest
             Recipe.Save(dt);
 
             string updatedrecipename  = SQLUtility.GetFirstColumnFirstRowValue("select RecipeName from Recipe where RecipeId=" + RecipeId).ToString();
-            Assert.IsTrue(updatedrecipename==RecipeName, "RecipeName for Recipe(" + RecipeId + ")=" + newrecipename);
+            ClassicAssert.IsTrue(updatedrecipename==RecipeName, "RecipeName for Recipe(" + RecipeId + ")=" + newrecipename);
             TestContext.WriteLine("RecipeName for Recipe(" + RecipeId +")=" + newrecipename);
         }
         [Test]
@@ -55,7 +56,7 @@ namespace RecipeTest
             SQLUtility.ExecuteSQL("delete from Recipe where RecipeId=" + RecipeId);
              
             DataTable dtafterdelete = SQLUtility.GetDataTable("select * from recipe where RecipeId =" + RecipeId);
-            Assert.IsTrue(dtafterdelete.Rows.Count == 0, "Record with RecipeId" + RecipeId + "exists in db");
+            ClassicAssert.IsTrue(dtafterdelete.Rows.Count == 0, "Record with RecipeId" + RecipeId + "exists in db");
             TestContext.WriteLine("Record with RecipeId" + RecipeId + "does not exist in DB");
         }
 
@@ -68,7 +69,7 @@ namespace RecipeTest
             TestContext.WriteLine("Ensure that app loads recipe" + RecipeId);
             DataTable dt = Recipe.Load(RecipeId);
             int loadedid= (int)dt.Rows[0]["RecipeId"];
-            Assert.IsTrue(loadedid==RecipeId, (int)dt.Rows[0]["RecipeId"] + "< >" + RecipeId);
+            ClassicAssert.IsTrue(loadedid==RecipeId, (int)dt.Rows[0]["RecipeId"] + "< >" + RecipeId);
             TestContext.WriteLine("Loaded recipe (" + loadedid + ")" );
 
         }
@@ -84,7 +85,7 @@ namespace RecipeTest
 
 
             DataTable dt = Recipe.GetCuisineList();
-            Assert.IsTrue(dt.Rows.Count ==cuisinecount, "num rows returned by app (" + dt.Rows.Count+")<>" + cuisinecount);
+            ClassicAssert.IsTrue(dt.Rows.Count ==cuisinecount, "num rows returned by app (" + dt.Rows.Count+")<>" + cuisinecount);
             TestContext.WriteLine("Number of rows in Cuisines returned by app=" + dt.Rows.Count);
         }
 
