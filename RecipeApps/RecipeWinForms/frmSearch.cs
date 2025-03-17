@@ -8,6 +8,7 @@ namespace RecipeWinForms
 {
     public partial class frmSearch : Form
     {
+        
         public frmSearch()
         {
             InitializeComponent();
@@ -19,7 +20,7 @@ namespace RecipeWinForms
 
 
 
-        private void SearchForRecipe(string recipename)
+       private void SearchForRecipe(string recipename)
         {
             
 
