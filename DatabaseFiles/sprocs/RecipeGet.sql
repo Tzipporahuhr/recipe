@@ -16,7 +16,7 @@ exec RecipeGet  @All=1
  
 --exec RecipeGet @RecipeId=161
 
-exec RecipeGet @RecipeName='Cheese'
+exec RecipeGet @RecipeName='Cheese' 
 
 declare @id int
 select top 1 @id=r.RecipeId from Recipe r

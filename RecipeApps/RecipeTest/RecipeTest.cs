@@ -1,5 +1,6 @@
 using NUnit.Framework.Legacy;
 using System.Data;
+using System.Data.SqlClient;
 
 namespace RecipeTest
 {
@@ -68,10 +69,31 @@ namespace RecipeTest
             TestContext.WriteLine("existing recipe with id = " + RecipeId);
             TestContext.WriteLine("Ensure that app loads recipe" + RecipeId);
             DataTable dt = Recipe.Load(RecipeId);
-            int loadedid= (int)dt.Rows[0]["RecipeId"];
-            ClassicAssert.IsTrue(loadedid==RecipeId, (int)dt.Rows[0]["RecipeId"] + "< >" + RecipeId);
+            int loadedid = 0;
+            if (dt.Rows.Count > 0)
+            {
+                loadedid = (int)dt.Rows[0]["recipeid"];
+            }
+         
+            ClassicAssert.IsTrue(loadedid==RecipeId, loadedid + "< >" + RecipeId);
             TestContext.WriteLine("Loaded recipe (" + loadedid + ")" );
 
+        }
+
+        [Test]
+        public void SearchRecipes()
+        {
+            string criteria = "a";
+            int num = SQLUtility.GetFirstColumnFirstRowValue("select total= count (*) from recipe where RecipeName like '%" + criteria + "%'");
+            Assume.That(num> 0, "there no recipes that match the search for " +num); 
+            TestContext.WriteLine(num + "presidents that match" + criteria);
+            TestContext.WriteLine("Ensure that recipe search returns" + num + "rows");
+         
+            DataTable dt =Recipe.SearchRecipes(criteria);
+            int results = dt.Rows.Count;
+            ClassicAssert.IsTrue(results==num,"Results of recipe search does not match number of recipes," + results +"<>" +num);
+            TestContext.WriteLine("Number of rows returned by recipe search is " + results);
+        
         }
 
         [Test]
@@ -79,7 +101,7 @@ namespace RecipeTest
         {
             
             int cuisinecount = SQLUtility.GetFirstColumnFirstRowValue("select total = count(*) from cuisine");
-            Assume.That(cuisinecount > 0, "No parties in DB, cant test");
+            Assume.That(cuisinecount > 0, "No cuisines in DB, cant test");
             TestContext.WriteLine("Num of cuisines in DB=" + cuisinecount);
             TestContext.WriteLine("Ensure that num of rows return by app matches " + cuisinecount);
 

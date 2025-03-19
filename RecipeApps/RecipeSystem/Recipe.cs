@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
+﻿using System.Data;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Data.SqlClient;
 using CPUFramework;
 
 namespace RecipeSystem
@@ -13,25 +9,32 @@ namespace RecipeSystem
     {
         public static DataTable SearchRecipes(string RecipeName)
         {
-            string sql = "select RecipeId, RecipeName from recipe r where r.recipename like '%" + RecipeName + "%'";
-            //changed txtrecipename.text to recipename
-
-            DataTable dt = SQLUtility.GetDataTable(sql);
-            return dt;
+           DataTable dt = new();
+           SqlCommand cmd=SQLUtility.GetSqlCommand("RecipeGet");
+           cmd.Parameters["@RecipeName"].Value = RecipeName;
+           dt = SQLUtility.GetDataTable(cmd);
+           return dt;
         }
+        
 
         public static DataTable Load(int recipeid)
         {
-            string sql =
+          DataTable dt =new();
+          SqlCommand cmd = SQLUtility.GetSqlCommand("RecipeGet");
+          cmd.Parameters["@RecipeId"].Value=recipeid;
+          dt = SQLUtility.GetDataTable(cmd);
+          return dt;
 
-   "select   r.*, c.CuisineName, s.FirstName from Recipe r join Staff s on r.StaffId= s.StaffId join Cuisine c on r.CuisineId= c.CuisineId  where r.RecipeId=" + recipeid.ToString();
-
-           return SQLUtility.GetDataTable(sql);
+            
         }
 
         public static DataTable GetCuisineList()
         {
-           return  SQLUtility.GetDataTable("select CuisineId, CuisineName from Cuisine");
+            DataTable dt= new DataTable();
+            SqlCommand cmd = SQLUtility.GetSqlCommand("CuisineGet");
+            cmd.Parameters["@All"].Value = 1;
+            dt = SQLUtility.GetDataTable(cmd);
+            return dt;
         }
 
        public static void Save(DataTable dtrecipe)
