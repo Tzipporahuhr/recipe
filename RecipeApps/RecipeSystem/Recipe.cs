@@ -28,7 +28,7 @@ namespace RecipeSystem
             
         }
 
-        public static DataTable GetCuisineList()
+       public static DataTable GetCuisineList()
         {
             DataTable dt= new DataTable();
             SqlCommand cmd = SQLUtility.GetSqlCommand("CuisineGet");
