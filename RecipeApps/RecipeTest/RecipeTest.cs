@@ -18,7 +18,7 @@ namespace RecipeTest
         {
            
             
-            int RecipeId = GetExistingRecipeId();
+           int RecipeId = GetExistingRecipeId();
             Assume.That(RecipeId > 0, "No Recipes in DB, cant run test");
             string RecipeName = SQLUtility.GetFirstColumnFirstRowValue("select RecipeName from Recipe where RecipeId=" + RecipeId).ToString();
             TestContext.WriteLine("Yearborn for RecipeId " + RecipeId + "is " +  RecipeName);
