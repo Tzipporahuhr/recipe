@@ -37,7 +37,16 @@ namespace RecipeSystem
             return dt;
         }
 
-       public static void Save(DataTable dtrecipe)
+        public static DataTable GetStaffList()
+        {
+            DataTable dt = new DataTable();
+            SqlCommand cmd = SQLUtility.GetSqlCommand("StaffGet");
+            cmd.Parameters["@All"].Value = 1;
+            dt = SQLUtility.GetDataTable(cmd);
+            return dt;
+        }
+
+        public static void Save(DataTable dtrecipe)
         {
             SQLUtility.DebugPrintDataTable(dtrecipe);
             DataRow r = dtrecipe.Rows[0];

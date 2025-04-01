@@ -39,7 +39,6 @@
             lblDateArchived = new Label();
             lblRecipePic = new Label();
             lblRecipeStatus = new Label();
-            lblFirstName = new Label();
             txtRecipeName = new TextBox();
             txtCalories = new TextBox();
             txtDateDrafted = new TextBox();
@@ -48,6 +47,7 @@
             txtRecipePic = new TextBox();
             txtRecipeStatus = new TextBox();
             lstCuisineName = new ComboBox();
+            lstFirstName = new ComboBox();
             tsMain = new ToolStrip();
             btnSave = new ToolStripButton();
             toolStripSeparator1 = new ToolStripSeparator();
@@ -71,7 +71,6 @@
             tblMain.Controls.Add(lblDateArchived, 0, 6);
             tblMain.Controls.Add(lblRecipePic, 0, 7);
             tblMain.Controls.Add(lblRecipeStatus, 0, 8);
-            tblMain.Controls.Add(lblFirstName, 1, 0);
             tblMain.Controls.Add(txtRecipeName, 1, 2);
             tblMain.Controls.Add(txtCalories, 1, 3);
             tblMain.Controls.Add(txtDateDrafted, 1, 4);
@@ -80,6 +79,7 @@
             tblMain.Controls.Add(txtRecipePic, 1, 7);
             tblMain.Controls.Add(txtRecipeStatus, 1, 8);
             tblMain.Controls.Add(lstCuisineName, 1, 1);
+            tblMain.Controls.Add(lstFirstName, 1, 0);
             tblMain.Location = new Point(0, 31);
             tblMain.Name = "tblMain";
             tblMain.RowCount = 9;
@@ -185,16 +185,6 @@
             lblRecipeStatus.TabIndex = 8;
             lblRecipeStatus.Text = "RecipeStatus";
             // 
-            // lblFirstName
-            // 
-            lblFirstName.BackColor = Color.WhiteSmoke;
-            lblFirstName.BorderStyle = BorderStyle.FixedSingle;
-            lblFirstName.Dock = DockStyle.Fill;
-            lblFirstName.Location = new Point(201, 0);
-            lblFirstName.Name = "lblFirstName";
-            lblFirstName.Size = new Size(138, 40);
-            lblFirstName.TabIndex = 9;
-            // 
             // txtRecipeName
             // 
             txtRecipeName.Dock = DockStyle.Fill;
@@ -259,6 +249,14 @@
             lstCuisineName.Size = new Size(138, 29);
             lstCuisineName.TabIndex = 18;
             // 
+            // lstFirstName
+            // 
+            lstFirstName.FormattingEnabled = true;
+            lstFirstName.Location = new Point(201, 3);
+            lstFirstName.Name = "lstFirstName";
+            lstFirstName.Size = new Size(138, 29);
+            lstFirstName.TabIndex = 19;
+            // 
             // tsMain
             // 
             tsMain.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
@@ -301,7 +299,7 @@
             // 
             AutoScaleDimensions = new SizeF(9F, 21F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(354, 447);
+            ClientSize = new Size(354, 458);
             Controls.Add(tsMain);
             Controls.Add(tblMain);
             Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
@@ -328,7 +326,6 @@
         private Label lblDateArchived;
         private Label lblRecipePic;
         private Label lblRecipeStatus;
-        private Label lblFirstName;
         private TextBox txtRecipeName;
         private TextBox txtCalories;
         private TextBox txtDateDrafted;
@@ -342,5 +339,6 @@
         private ToolStripButton btnDelete;
         private ToolStripSeparator toolStripSeparator2;
         private ComboBox lstCuisineName;
+        private ComboBox lstFirstName;
     }
 }
