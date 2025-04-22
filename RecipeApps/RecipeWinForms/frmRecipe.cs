@@ -56,14 +56,35 @@ namespace RecipeWinForms
       
         private void Save()
         {
-            Recipe.Save(dtrecipe);
+            try
+            {
+                Recipe.Save(dtrecipe);
+           
+            }
+          catch(Exception ex) {
+                //form is incorrect
+           
+              
+                MessageBox.Show(ex.Message,"Recipe");
+            }
             this.Close();
+
         }
 
         private void Delete()
         {
-           Recipe.Delete(dtrecipe);
+            try
+            {
+                Recipe.Delete(dtrecipe);
+               
+            
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Recipe");
+            }
             this.Close();
+
         }
 
         private void BtnDelete_Click(object? sender, EventArgs e)
