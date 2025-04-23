@@ -60,6 +60,39 @@ namespace RecipeTest
             ClassicAssert.IsTrue(dtafterdelete.Rows.Count == 0, "Record with RecipeId" + RecipeId + "exists in db");
             TestContext.WriteLine("Record with RecipeId" + RecipeId + "does not exist in DB");
         }
+        [Test]
+
+        public void DeleteRecipeWithStaff()
+        {
+            DataTable dt = SQLUtility.GetDataTable("select top 1 r.RecipeId, r.Calories, r.RecipeName  from Recipe r  join staff s on s.staffid=r.staffid");
+            int RecipeId = 0;
+            string recipedesc = "";
+            if (dt.Rows.Count > 0)
+            {
+                RecipeId = (int)dt.Rows[0]["RecipeId"];
+                recipedesc = dt.Rows[0]["Calories"] + " " + dt.Rows[0]["RecipeName"];
+            }
+
+            Assume.That(RecipeId > 0, "No recipes with staff in DB, cant run test");
+            TestContext.WriteLine("existing recipe with staff, with id=" + RecipeId + " " + recipedesc);
+            TestContext.WriteLine("ensure that app cannot delete" + RecipeId);
+
+
+            Assert.Throws<Exception>(() => SQLUtility.ExecuteSQL("delete from RecipeCookbook where RecipeId=" + RecipeId));
+           Assert.Throws<Exception>(() => SQLUtility.ExecuteSQL("delete from CourseMealRecipe where RecipeId=" + RecipeId));
+            Assert.Throws<Exception>(() => SQLUtility.ExecuteSQL("delete from Direction where RecipeId=" + RecipeId));
+            Assert.Throws<Exception>(() => SQLUtility.ExecuteSQL("delete from RecipeIngredient where RecipeId= " + RecipeId));
+            Assert.Throws<Exception>(() => SQLUtility.ExecuteSQL("delete from Recipe where RecipeId=" + RecipeId));
+            //SQLUtility.ExecuteSQL("delete from RecipeCookbook where RecipeId=" + RecipeId);
+            // SQLUtility.ExecuteSQL("delete from CourseMealRecipe where RecipeId=" + RecipeId);
+            //  SQLUtility.ExecuteSQL("delete from Direction where RecipeId=" + RecipeId);
+            //  SQLUtility.ExecuteSQL("delete from RecipeIngredient where RecipeId= " + RecipeId);
+           // SQLUtility.ExecuteSQL("delete from Recipe where RecipeId=" + RecipeId);
+
+            //DataTable dtafterdelete = SQLUtility.GetDataTable("select * from recipe where RecipeId =" + RecipeId);
+            //ClassicAssert.IsTrue(dtafterdelete.Rows.Count == 0, "Record with RecipeId" + RecipeId + "exists in db");
+           TestContext.WriteLine("Unable to delete");
+        }
 
         [Test]
         public void LoadRecipe()

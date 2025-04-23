@@ -17,7 +17,8 @@ namespace RecipeWinForms
     
     public partial class frmRecipe : Form
     {
-        DataTable dtrecipe;
+        DataTable dtrecipe = new DataTable();
+    
         public frmRecipe()
         {
             InitializeComponent();
@@ -56,23 +57,29 @@ namespace RecipeWinForms
       
         private void Save()
         {
+            Application.UseWaitCursor = true;
             try
             {
                 Recipe.Save(dtrecipe);
-           
+               
+
             }
           catch(Exception ex) {
-                //form is incorrect
+                
            
               
                 MessageBox.Show(ex.Message,"Recipe");
+            }
+            finally
+            {
+                Application.UseWaitCursor = false;
             }
             this.Close();
 
         }
 
         private void Delete()
-        {
+        {Application.UseWaitCursor = true;
             try
             {
                 Recipe.Delete(dtrecipe);
@@ -82,6 +89,10 @@ namespace RecipeWinForms
             catch(Exception ex)
             {
                 MessageBox.Show(ex.Message, "Recipe");
+            }
+            finally
+            {
+                Application.UseWaitCursor = false;
             }
             this.Close();
 
