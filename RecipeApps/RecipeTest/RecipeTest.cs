@@ -29,6 +29,14 @@ namespace RecipeTest
 
             DataTable dt = Recipe.Load(RecipeId);
             dt.Rows[0]["RecipeName"] = RecipeName;
+
+            //star
+            DateTime drafted = Convert.ToDateTime(dt.Rows[0]["DateDrafted"]);
+            if (drafted > DateTime.Today)
+            {
+                dt.Rows[0]["DateDrafted"] = DateTime.Today;
+            }
+            //finish
             Recipe.Save(dt);
 
             string updatedrecipename  = SQLUtility.GetFirstColumnFirstRowValue("select RecipeName from Recipe where RecipeId=" + RecipeId).ToString();

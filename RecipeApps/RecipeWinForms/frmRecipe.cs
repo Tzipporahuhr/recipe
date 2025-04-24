@@ -1,14 +1,4 @@
-﻿using CPUFramework;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Diagnostics;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+﻿using System.Data;
 using CPUWindowsFormFramework;
 using RecipeSystem;
 
@@ -71,16 +61,17 @@ namespace RecipeWinForms
 
                 MessageBox.Show(ex.Message,"Recipe");
             }
-           // finally
-            //{
-              //  Application.UseWaitCursor = false;
-            //}
-            //this.Close();
+            finally
+            {
+               Application.UseWaitCursor = false;
+            }
+            this.Close();
 
         }
 
         private void Delete()
-        {Application.UseWaitCursor = true;
+        {
+            Application.UseWaitCursor = true;
             try
             {
                 Recipe.Delete(dtrecipe);
@@ -91,12 +82,12 @@ namespace RecipeWinForms
             {
                 MessageBox.Show(ex.Message, "Recipe");
             }
-           //finally
-           //{
-           //    Application.UseWaitCursor = false;
-           //}
-           //this.Close();
-
+            finally
+            {
+                Application.UseWaitCursor = false;
+            }
+            this.Close();
+            
         }
 
         private void BtnDelete_Click(object? sender, EventArgs e)
