@@ -61,20 +61,21 @@ namespace RecipeWinForms
             try
             {
                 Recipe.Save(dtrecipe);
-               
+
 
             }
-          catch(Exception ex) {
-                
-           
-              
+            catch (Exception ex)
+            {
+
+             
+
                 MessageBox.Show(ex.Message,"Recipe");
             }
-            finally
-            {
-                Application.UseWaitCursor = false;
-            }
-            this.Close();
+           // finally
+            //{
+              //  Application.UseWaitCursor = false;
+            //}
+            //this.Close();
 
         }
 
@@ -90,11 +91,11 @@ namespace RecipeWinForms
             {
                 MessageBox.Show(ex.Message, "Recipe");
             }
-            finally
-            {
-                Application.UseWaitCursor = false;
-            }
-            this.Close();
+           //finally
+           //{
+           //    Application.UseWaitCursor = false;
+           //}
+           //this.Close();
 
         }
 
