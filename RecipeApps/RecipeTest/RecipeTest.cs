@@ -44,6 +44,8 @@ namespace RecipeTest
             TestContext.WriteLine("RecipeName for Recipe(" + RecipeId +")=" + newrecipename);
         }
         [Test]
+
+
         public void DeleteRecipe()
         { DataTable dt = SQLUtility.GetDataTable("select top 1 r.RecipeId, r.Calories, r.RecipeName  from Recipe r left join staff s on s.staffid=r.staffid");
             int RecipeId = 0;
@@ -68,7 +70,39 @@ namespace RecipeTest
             ClassicAssert.IsTrue(dtafterdelete.Rows.Count == 0, "Record with RecipeId" + RecipeId + "exists in db");
             TestContext.WriteLine("Record with RecipeId" + RecipeId + "does not exist in DB");
         }
-        
+
+        [Test]
+        public void RecipeCaloriesMustBeGreaterThanZero()
+        { 
+        DataTable dt = Recipe.Load(GetExistingRecipeId());
+            dt.Rows[0]["Calories"] = 0;
+
+            var ex= Assert.Throws<Exception>(()=> Recipe.Save(dt));
+            TestContext.WriteLine(ex.Message);
+            StringAssert.Contains("Recipe Calories bought must be greater than zero", ex.Message);
+
+
+        }
+        [Test]
+        public void RecipeNameMustNotBeBlank()
+        {
+            DataTable dt= Recipe.Load(GetExistingRecipeId());
+            dt.Rows[0]["RecipeName"] = "";
+            var ex= Assert.Throws<Exception>(() => Recipe.Save(dt));
+            TestContext.WriteLine(ex.Message);
+            StringAssert.Contains("Recipe RecipeName cannot be blank", ex.Message);
+        }
+
+        [Test]
+
+        public void RecipeDateDraftedCannotBeInFuture()
+        {
+            DataTable dt= Recipe.Load(GetExistingRecipeId());
+            dt.Rows[0]["DateDrafted"] = DateTime.Today.AddDays(1);
+            var ex = Assert.Throws<Exception>(() => Recipe.Save(dt));
+            TestContext.WriteLine(ex.Message);
+            StringAssert.Contains("Recipe DateDrafted must not be future", ex.Message);
+        }
 
         
 

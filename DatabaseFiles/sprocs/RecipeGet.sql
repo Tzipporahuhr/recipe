@@ -3,12 +3,16 @@ as
 begin
 	 select r.RecipeId, r.StaffId, r.CuisineId,  r.RecipeName, r.Calories, r.DateDrafted, r.DatePublished, r.DateArchived, r.RecipePic, r.RecipeStatus
 	 from Recipe r
-	 where r.RecipeId=@RecipeId
-	 or r.RecipeName like '%' + @RecipeName + '%'
-	 or @All=1
+	 where (@RecipeId=0 or r.RecipeId=@RecipeId)
+	 and (@All=1 or r.RecipeName like '%'+ @RecipeName + '%')
+	 --r.RecipeId=@RecipeId
+	-- or r.RecipeName like '%' + @RecipeName + '%'
+	 --or @All=1
 	 order by r.RecipeName, r.Calories, r.DateDrafted, r.DatePublished, r.DateArchived, r.RecipePic, r.RecipeStatus
 end
 go
+
+
 /*
 exec RecipeGet
 
