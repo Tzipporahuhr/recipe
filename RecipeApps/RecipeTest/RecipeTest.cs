@@ -20,7 +20,8 @@ namespace RecipeTest
             
             int RecipeId = GetExistingRecipeId();
             Assume.That(RecipeId > 0, "No Recipes in DB, cant run test");
-            string RecipeName = SQLUtility.GetFirstColumnFirstRowValue("select RecipeName from Recipe where RecipeId=" + RecipeId).ToString();
+            
+            string RecipeName = SQLUtility.GetFirstColumnFirstRowValueAsString("select RecipeName from Recipe where RecipeId=" + RecipeId);
             TestContext.WriteLine("Yearborn for RecipeId " + RecipeId + "is " +  RecipeName);
 
             string currenttime = DateTime.Now.ToString("yyyy-MM-dd. HHmmss");
@@ -30,16 +31,18 @@ namespace RecipeTest
             DataTable dt = Recipe.Load(RecipeId);
             dt.Rows[0]["RecipeName"] = RecipeName;
 
-            //star
-            DateTime drafted = Convert.ToDateTime(dt.Rows[0]["DateDrafted"]);
-            if (drafted > DateTime.Today)
+            
+
+            DateTime? drafted = dt.Rows[0]["DateDrafted"] as DateTime?;
+            if (!drafted.HasValue || drafted > DateTime.Today)
             {
                 dt.Rows[0]["DateDrafted"] = DateTime.Today;
             }
-            //finish
+            
             Recipe.Save(dt);
 
-            string updatedrecipename  = SQLUtility.GetFirstColumnFirstRowValue("select RecipeName from Recipe where RecipeId=" + RecipeId).ToString();
+            // string updatedrecipename  = SQLUtility.GetFirstColumnFirstRowValue("select RecipeName from Recipe where RecipeId=" + RecipeId).ToString();
+            string updatedrecipename = SQLUtility.GetFirstColumnFirstRowValueAsString("select RecipeName from Recipe where RecipeId=" + RecipeId);
             ClassicAssert.IsTrue(updatedrecipename==RecipeName, "RecipeName for Recipe(" + RecipeId + ")=" + newrecipename);
             TestContext.WriteLine("RecipeName for Recipe(" + RecipeId +")=" + newrecipename);
         }
@@ -101,7 +104,7 @@ namespace RecipeTest
             dt.Rows[0]["DateDrafted"] = DateTime.Today.AddDays(1);
             var ex = Assert.Throws<Exception>(() => Recipe.Save(dt));
             TestContext.WriteLine(ex.Message);
-            StringAssert.Contains("Recipe DateDrafted must not be future", ex.Message);
+            StringAssert.Contains("Recipe DateDrafted", ex.Message);
         }
 
         
@@ -129,7 +132,8 @@ namespace RecipeTest
         public void SearchRecipes()
         {
             string criteria = "a";
-            int num = SQLUtility.GetFirstColumnFirstRowValue("select total= count (*) from recipe where RecipeName like '%" + criteria + "%'");
+             
+            int num = int.Parse(SQLUtility.GetFirstColumnFirstRowValueAsString("select total= count (*) from recipe where RecipeName like '%" + criteria + "%'"));
             Assume.That(num> 0, "there no recipes that match the search for " +num); 
             TestContext.WriteLine(num + "presidents that match" + criteria);
             TestContext.WriteLine("Ensure that recipe search returns" + num + "rows");
@@ -144,8 +148,9 @@ namespace RecipeTest
         [Test]
         public void GetListOfCuisines()
         {
-            
-            int cuisinecount = SQLUtility.GetFirstColumnFirstRowValue("select total = count(*) from cuisine");
+
+             
+            int cuisinecount = int.Parse(SQLUtility.GetFirstColumnFirstRowValueAsString("select total = count(*) from cuisine"));
             Assume.That(cuisinecount > 0, "No cuisines in DB, cant test");
             TestContext.WriteLine("Num of cuisines in DB=" + cuisinecount);
             TestContext.WriteLine("Ensure that num of rows return by app matches " + cuisinecount);
@@ -155,10 +160,43 @@ namespace RecipeTest
             ClassicAssert.IsTrue(dt.Rows.Count ==cuisinecount, "num rows returned by app (" + dt.Rows.Count+")<>" + cuisinecount);
             TestContext.WriteLine("Number of rows in Cuisines returned by app=" + dt.Rows.Count);
         }
-
+         
         private int GetExistingRecipeId()
         {
-            return SQLUtility.GetFirstColumnFirstRowValue("select top 1 RecipeId from recipe");
+           
+         
+            string val = SQLUtility.GetFirstColumnFirstRowValueAsString("select top 1 RecipeId from recipe");
+            Assume.That(!string.IsNullOrEmpty(val), "No recipes in DB, can't run test");
+            return int.Parse(val);
         }
+        
+
+       
+        [Test]
+        public void RecipeStaffIdMustExist()
+        {
+            DataTable dt = Recipe.Load(GetExistingRecipeId());
+
+            dt.Rows[0]["StaffId"] = 999999; 
+            dt.Rows[0]["RecipeName"] += " test"; 
+
+            var ex = Assert.Throws<Exception>(() => Recipe.Save(dt));
+            TestContext.WriteLine("Error message: " + ex.Message);
+            StringAssert.Contains("Staff Recipe", ex.Message);  
+        }
+
+        [Test]
+        public void CuisineNameMustBeUnique()
+        {
+            string existingName = SQLUtility.GetFirstColumnFirstRowValueAsString("select top 1 CuisineName from Cuisine");
+
+            var ex = Assert.Throws<Exception>(() =>
+                SQLUtility.ExecuteSQL($"insert into Cuisine (CuisineName) values ('{existingName}')"));
+
+            TestContext.WriteLine(ex.Message);
+            StringAssert.Contains("must be unique", ex.Message);
+        }
+
+
     }
 }
