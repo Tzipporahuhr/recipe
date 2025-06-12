@@ -55,7 +55,6 @@ namespace RecipeTest
             Assume.That(RecipeId > 0, "No recipes without staff in DB, cant run test");
             TestContext.WriteLine("existing recipe without staff, with id=" + RecipeId+" " + recipedesc);
             TestContext.WriteLine("ensure that app can delete" + RecipeId);
-
             //SQLUtility.ExecuteSQL("delete from RecipeCookbook where RecipeId=" + RecipeId);
             //SQLUtility.ExecuteSQL("delete from CourseMealRecipe where RecipeId=" + RecipeId);
             //SQLUtility.ExecuteSQL("delete from Direction where RecipeId="+ RecipeId);
