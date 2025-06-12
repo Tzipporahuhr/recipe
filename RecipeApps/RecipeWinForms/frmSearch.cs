@@ -12,7 +12,6 @@ namespace RecipeWinForms
         public frmSearch()
         {
             InitializeComponent();
-
             btnSearch.Click += BtnSearch_Click;
             WindowsFormsUtility.FormatGridForSearchResults(gRecipe);
             gRecipe.CellDoubleClick += GRecipe_CellDoubleClick;
@@ -33,8 +32,7 @@ namespace RecipeWinForms
             frm.ShowForm(id);
         }
       
-
-        private void GRecipe_CellDoubleClick(object? sender, DataGridViewCellEventArgs e)
+      private void GRecipe_CellDoubleClick(object? sender, DataGridViewCellEventArgs e)
         {
             ShowRecipeForm(e.RowIndex);
         }

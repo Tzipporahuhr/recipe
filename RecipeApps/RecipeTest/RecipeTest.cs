@@ -56,12 +56,14 @@ namespace RecipeTest
             TestContext.WriteLine("existing recipe without staff, with id=" + RecipeId+" " + recipedesc);
             TestContext.WriteLine("ensure that app can delete" + RecipeId);
 
-            SQLUtility.ExecuteSQL("delete from RecipeCookbook where RecipeId=" + RecipeId);
-            SQLUtility.ExecuteSQL("delete from CourseMealRecipe where RecipeId=" + RecipeId);
-            SQLUtility.ExecuteSQL("delete from Direction where RecipeId="+ RecipeId);
-            SQLUtility.ExecuteSQL("delete from RecipeIngredient where RecipeId= " + RecipeId);
-            SQLUtility.ExecuteSQL("delete from Recipe where RecipeId=" + RecipeId);
-             
+            //SQLUtility.ExecuteSQL("delete from RecipeCookbook where RecipeId=" + RecipeId);
+            //SQLUtility.ExecuteSQL("delete from CourseMealRecipe where RecipeId=" + RecipeId);
+            //SQLUtility.ExecuteSQL("delete from Direction where RecipeId="+ RecipeId);
+            //SQLUtility.ExecuteSQL("delete from RecipeIngredient where RecipeId= " + RecipeId);
+            //SQLUtility.ExecuteSQL("delete from Recipe where RecipeId=" + RecipeId);
+            SqlCommand cmd = SQLUtility.GetSqlCommand("RecipeDelete");
+            cmd.Parameters["@RecipeId"].Value= RecipeId;
+            SQLUtility.ExecuteSQL(cmd);
             DataTable dtafterdelete = SQLUtility.GetDataTable("select * from recipe where RecipeId =" + RecipeId);
             ClassicAssert.IsTrue(dtafterdelete.Rows.Count == 0, "Record with RecipeId" + RecipeId + "exists in db");
             TestContext.WriteLine("Record with RecipeId" + RecipeId + "does not exist in DB");
