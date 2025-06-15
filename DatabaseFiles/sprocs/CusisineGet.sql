@@ -1,7 +1,7 @@
  create or alter procedure dbo.CuisineGet(@CuisineId int=0, @CuisineName varchar (40)='', @All bit=0)
 as
 begin
-	select @CuisineName= nullif(@CuisineName,'')
+	select @CuisineName= nullif(@CuisineName,' ')
 	select c.CuisineId, c.CuisineName 
 	from Cuisine c
 	where c.CuisineId=@CuisineId
