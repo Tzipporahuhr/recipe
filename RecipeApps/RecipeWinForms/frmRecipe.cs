@@ -82,6 +82,7 @@ namespace RecipeWinForms
             {
                 Recipe.Delete(dtrecipe);
             }
+            
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "Recipe");
