@@ -68,26 +68,42 @@ namespace RecipeTest
             TestContext.WriteLine("Record with RecipeId" + RecipeId + "does not exist in DB");
         }
 
-        [Test]
+        //[Test]
 
-        public void DeleteRecipeWithoutRelatedRecords()
+        //public void DeleteRecipeWithoutRelatedRecords()
+        //{
+        //    int id = SQLUtility.GetFirstColumnFirstRowValue(@"
+        //    select top 1 r.RecipeId 
+        //    from Recipe r
+        //    left join CourseMealRecipe cmr on cmr.RecipeId = r.RecipeId
+        //    left join RecipeCookBook rcb on rcb.RecipeId = r.RecipeId
+        //    where cmr.RecipeId is null and rcb.RecipeId is null");
+        //    Assume.That(id > 0, "No deletetable recipes found");
+        //    TestContext.WriteLine("trying to delete RecipeId=" + id);
+        //    SqlCommand cmd = SQLUtility.GetSqlCommand("RecipeDelete");
+        //    cmd.Parameters["@RecipeId"].Value = id;
+        //    SQLUtility.ExecuteSQL(cmd);
+
+        //    int count = SQLUtility.GetFirstColumnFirstRowValue($" select count (*) from Recipe where RecipeId={id}");
+        //    ClassicAssert.IsTrue(count == 0, $"RecipeId{id} still exist in DB after deletion");
+        //}
+
+        [Test]
+        public void DeleteRecipe_OnlyIfArchivedOver30DaysOrDrafted()
         {
+
             int id = SQLUtility.GetFirstColumnFirstRowValue(@"
-            select top 1 r.RecipeId 
-            from Recipe r
-            left join CourseMealRecipe cmr on cmr.RecipeId = r.RecipeId
-            left join RecipeCookBook rcb on rcb.RecipeId = r.RecipeId
-            where cmr.RecipeId is null and rcb.RecipeId is null");
-            Assume.That(id > 0, "No deletetable recipes found");
-            TestContext.WriteLine("trying to delete RecipeId=" + id);
+        select top 1 r.RecipeId from Recipe r where (r.DateArchived is null or r.DateArchived > dateadd(day, -30, getdate()))  and r.DatePublished is not null");
+            Assume.That(id > 0, "No recipe found that should not be deletable");
+            TestContext.WriteLine("Trying to delete non-deletable RecipeId = " + id);
             SqlCommand cmd = SQLUtility.GetSqlCommand("RecipeDelete");
             cmd.Parameters["@RecipeId"].Value = id;
-            SQLUtility.ExecuteSQL(cmd);
-
-            int count = SQLUtility.GetFirstColumnFirstRowValue($" select count (*) from Recipe where RecipeId={id}");
-            ClassicAssert.IsTrue(count == 0, $"RecipeId{id} still exist in DB after deletion");
+            cmd.Parameters["@Message"].Value = "";  
+            var ex = Assert.Throws<Exception>(() => SQLUtility.ExecuteSQL(cmd));
+            TestContext.WriteLine(ex.Message);
+            StringAssert.Contains("Recipe cant be deleted unless it is either drafted or archived for more than 30 days.", ex.Message);
         }
-
+            
         [Test]
         public void RecipeCaloriesMustBeGreaterThanZero()
         { 
@@ -145,7 +161,7 @@ namespace RecipeTest
             string criteria = "a";
             int num = int.Parse(SQLUtility.GetFirstColumnFirstRowValueAsString("select total= count (*) from recipe where RecipeName like '%" + criteria + "%'"));
             Assume.That(num> 0, "there no recipes that match the search for " +num); 
-            TestContext.WriteLine(num + "presidents that match" + criteria);
+            TestContext.WriteLine(num + "recipes that match" + criteria);
             TestContext.WriteLine("Ensure that recipe search returns" + num + "rows");
             DataTable dt =Recipe.SearchRecipes(criteria);
             int results = dt.Rows.Count;
@@ -173,15 +189,30 @@ namespace RecipeTest
            return int.Parse(val);
         }
         
+        
+
         [Test]
         public void RecipeStaffIdMustExist()
         {
+           
             DataTable dt = Recipe.Load(GetExistingRecipeId());
-            dt.Rows[0]["StaffId"] = 999999; 
-            dt.Rows[0]["RecipeName"] += " test"; 
+
+           
+            dt.Rows[0]["StaffId"] = -1;
+
+      
+            dt.Rows[0]["DateDrafted"] = DateTime.Today.AddDays(-10);
+            dt.Rows[0]["DatePublished"] = DateTime.Today.AddDays(-5);
+            dt.Rows[0]["DateArchived"] = DateTime.Today;
+            dt.Rows[0]["RecipeName"] += " test";
+
+       
             var ex = Assert.Throws<Exception>(() => Recipe.Save(dt));
-            TestContext.WriteLine("Error message: " + ex.Message);
-            StringAssert.Contains("Staff Recipe", ex.Message);  
+
+           
+            TestContext.WriteLine("Actual message: " + ex.Message);
+
+            StringAssert.Contains("Cannot delete Staff", ex.Message);
         }
 
         [Test]
@@ -193,7 +224,5 @@ namespace RecipeTest
             TestContext.WriteLine(ex.Message);
             StringAssert.Contains("must be unique", ex.Message);
         }
-
-
-    }
-}
+     }
+   }

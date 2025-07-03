@@ -51,23 +51,24 @@ namespace RecipeSystem
             SQLUtility.DebugPrintDataTable(dtrecipe);
             DataRow r = dtrecipe.Rows[0];
             string sql = string.Join(Environment.NewLine, $"update recipe set",
-                 //$"FirstName='{r["FirstName"]}'",
-                 $"CuisineId='{r["CuisineId"]}',",
-                 $"RecipeName='{r["RecipeName"]}',",
-                 $"Calories='{r["Calories"]}',",
-                 $"DateDrafted='{r["DateDrafted"]}',",
-                 $"DatePublished='{r["DatePublished"]}',",
-                        $"DateArchived='{r["DateArchived"]}'",
-                // $"RecipePic='{r["RecipePic"]}',",
-                ///$"RecipeStatus='{r["RecipeStatus"]}'",
-
-                $" where recipeId=   {r["recipeId"]}");
-
+       $"CuisineId='{r["CuisineId"]}',",
+       $"StaffId='{r["StaffId"]}',",             
+       $"RecipeName='{r["RecipeName"]}',",
+       $"Calories='{r["Calories"]}',",
+       $"DateDrafted='{r["DateDrafted"]}',",
+       $"DatePublished='{r["DatePublished"]}',",
+       $"DateArchived='{r["DateArchived"]}'",
+       $" where recipeId=   {r["recipeId"]}");
             Debug.Print("------------------");
-            ;
-            SQLUtility.ExecuteSQL(sql);
-            
 
+            try
+            {
+                SQLUtility.ExecuteSQL(sql);   
+            }
+            catch (Exception ex)
+            {
+                throw;   
+            }
         }
 
        public static void Delete(DataTable dtrecipe)
@@ -75,7 +76,8 @@ namespace RecipeSystem
             int id = (int)dtrecipe.Rows[0]["recipeId"];
             SqlCommand cmd= SQLUtility.GetSqlCommand("RecipeDelete");
             cmd.Parameters["@RecipeId"].Value = id;
-          
+             
+
             SQLUtility.ExecuteSQL(cmd);
              
         }
