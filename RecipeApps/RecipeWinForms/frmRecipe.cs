@@ -17,21 +17,14 @@ namespace RecipeWinForms
             btnDelete.Click += BtnDelete_Click;
         }
 
-    
-
-        public void ShowForm(int recipeid)
+     public void ShowForm(int recipeid)
         {
     
-
-             dtrecipe = Recipe.Load(recipeid);
-
+            dtrecipe = Recipe.Load(recipeid);
             DataTable dtCuisines = Recipe.GetCuisineList();
             WindowsFormsUtility.SetListBinding(lstCuisineName, dtCuisines, dtrecipe, "Cuisine");
             DataTable dtStaff= Recipe.GetStaffList();
-    WindowsFormsUtility.SetListBinding(lstFirstName, dtStaff, dtrecipe, "Staff");
-
-
-
+            WindowsFormsUtility.SetListBinding(lstFirstName, dtStaff, dtrecipe, "Staff");
             WindowsFormsUtility.SetControlBinding(txtRecipeName, dtrecipe);
             WindowsFormsUtility.SetControlBinding(txtCalories, dtrecipe);
             WindowsFormsUtility.SetControlBinding(txtDateDrafted, dtrecipe);
