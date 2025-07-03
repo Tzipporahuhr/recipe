@@ -34,7 +34,7 @@ namespace RecipeWinForms
             WindowsFormsUtility.SetControlBinding(txtRecipeStatus, dtrecipe);
            
 
-            this.Show();
+       this.Show();
         }
 
       
