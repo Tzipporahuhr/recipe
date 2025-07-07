@@ -173,9 +173,9 @@ Create table dbo.RecipeCookBook(
 )
 go
  
-      SELECT TOP 1 r.RecipeId, r.Calories, r.RecipeName
-     FROM Recipe r
-     JOIN staff s ON s.staffid = r.staffid;
+     -- SELECT TOP 1 r.RecipeId, r.Calories, r.RecipeName
+     --FROM Recipe r
+     --JOIN staff s ON s.staffid = r.staffid;
  
  
    

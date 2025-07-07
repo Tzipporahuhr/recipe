@@ -87,23 +87,27 @@ namespace RecipeTest
         //    int count = SQLUtility.GetFirstColumnFirstRowValue($" select count (*) from Recipe where RecipeId={id}");
         //    ClassicAssert.IsTrue(count == 0, $"RecipeId{id} still exist in DB after deletion");
         //}
-
         [Test]
         public void DeleteRecipe_OnlyIfArchivedOver30DaysOrDrafted()
         {
-
-            int id = SQLUtility.GetFirstColumnFirstRowValue(@"
-        select top 1 r.RecipeId from Recipe r where (r.DateArchived is null or r.DateArchived > dateadd(day, -30, getdate()))  and r.DatePublished is not null");
-            Assume.That(id > 0, "No recipe found that should not be deletable");
+            int id = SQLUtility.GetFirstColumnFirstRowValue
+         (@"
+        select top 1 RecipeId from Recipe where RecipeStatus <> 'drafted'
+          and (DateArchived is null or datediff(day, DateArchived, getdate()) <= 30)
+          ");
+             Assume.That(id > 0, "No recipe found that should not be deletable");
             TestContext.WriteLine("Trying to delete non-deletable RecipeId = " + id);
+
             SqlCommand cmd = SQLUtility.GetSqlCommand("RecipeDelete");
             cmd.Parameters["@RecipeId"].Value = id;
-            cmd.Parameters["@Message"].Value = "";  
+            cmd.Parameters["@Message"].Value = "";
+            cmd.Parameters["@Message"].Direction = ParameterDirection.InputOutput;
+
             var ex = Assert.Throws<Exception>(() => SQLUtility.ExecuteSQL(cmd));
             TestContext.WriteLine(ex.Message);
             StringAssert.Contains("Recipe cant be deleted unless it is either drafted or archived for more than 30 days.", ex.Message);
         }
-            
+
         [Test]
         public void RecipeCaloriesMustBeGreaterThanZero()
         { 

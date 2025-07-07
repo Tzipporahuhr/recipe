@@ -7,12 +7,12 @@ begin
     declare @return int = 0
 
     
-    if not exists (select 1 from Recipe where RecipeId = @RecipeId 
+if not exists (select 1 from Recipe where RecipeId = @RecipeId 
           and (
-              (DateArchived is not null and DateArchived <= dateadd(day, -30, getdate()))
-              or (DatePublished is null and DateArchived is null)
+              datediff(day, DateArchived, getdate()) > 30
+              or RecipeStatus = 'drafted'
               )
-    )
+)
     begin
         set @return = 1
         set @Message = 'Recipe cant be deleted unless it is either drafted or archived for more than 30 days.'
@@ -33,7 +33,8 @@ begin try
         throw;
     end catch
 
-    return @return
+   
+   return @return
 end
 go
 

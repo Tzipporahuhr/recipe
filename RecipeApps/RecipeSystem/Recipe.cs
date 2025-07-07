@@ -76,7 +76,18 @@ namespace RecipeSystem
             int id = (int)dtrecipe.Rows[0]["recipeId"];
             SqlCommand cmd= SQLUtility.GetSqlCommand("RecipeDelete");
             cmd.Parameters["@RecipeId"].Value = id;
-             
+            cmd.Parameters["@Message"].Value = "";
+            cmd.Parameters["@Message"].Direction = ParameterDirection.InputOutput;
+
+            SQLUtility.ExecuteSQL(cmd);
+
+            
+            string msg = cmd.Parameters["@Message"].Value.ToString();
+            if (!string.IsNullOrEmpty(msg))
+            {
+                throw new Exception(msg);
+            }
+
 
             SQLUtility.ExecuteSQL(cmd);
              
