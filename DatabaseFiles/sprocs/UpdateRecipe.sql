@@ -13,13 +13,13 @@ create or alter proc dbo.RecipeUpdate
 as
 begin
 
-    set @RecipeId= isnull(@RecipeId,0)  ----
+    set @RecipeId= isnull(@RecipeId,0)  
     declare @return int = 0
 
-	if isnull (Ltrim(rtrim(@RecipeName)), '') = ''----
+	if isnull (Ltrim(rtrim(@RecipeName)), '') = ''
 	begin 
 	     set @return=1  ----
-		 set @Message = 'Recipe RecipeName cannot be blank'---
+		 set @Message = 'Recipe RecipeName cannot be blank'
 		 goto finished--
 end--
 
