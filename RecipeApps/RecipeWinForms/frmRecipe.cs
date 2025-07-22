@@ -8,7 +8,8 @@ namespace RecipeWinForms
     public partial class frmRecipe : Form
     {
         DataTable dtrecipe = new DataTable();
-    
+        BindingSource bindsource = new BindingSource();
+
         public frmRecipe()
         {
             InitializeComponent();
@@ -17,34 +18,53 @@ namespace RecipeWinForms
             btnDelete.Click += BtnDelete_Click;
         }
 
-    
+
 
         public void ShowForm(int recipeid)
         {
-    
+            if (recipeid == 0)
+            {
+                dtrecipe = Recipe.Load(0);       
+                dtrecipe.Rows.Add();             
 
-             dtrecipe = Recipe.Load(recipeid);
+                
+                txtDateDrafted.ReadOnly = true;
+                txtDateDrafted.TabStop = false;
+                txtDateDrafted.BackColor = SystemColors.Control;
+
+                txtDatePublished.ReadOnly = true;
+                txtDatePublished.TabStop = false;
+                txtDatePublished.BackColor = SystemColors.Control;
+
+                txtDateArchived.ReadOnly = true;
+                txtDateArchived.TabStop = false;
+                txtDateArchived.BackColor = SystemColors.Control;
+            }
+            else
+            {
+                dtrecipe = Recipe.Load(recipeid);
+            }
+
+            bindsource.DataSource = dtrecipe;
 
             DataTable dtCuisines = Recipe.GetCuisineList();
             WindowsFormsUtility.SetListBinding(lstCuisineName, dtCuisines, dtrecipe, "Cuisine");
-            DataTable dtStaff= Recipe.GetStaffList();
-    WindowsFormsUtility.SetListBinding(lstFirstName, dtStaff, dtrecipe, "Staff");
 
+            DataTable dtStaff = Recipe.GetStaffList();
+            WindowsFormsUtility.SetListBinding(lstFirstName, dtStaff, dtrecipe, "Staff");
 
-
-            WindowsFormsUtility.SetControlBinding(txtRecipeName, dtrecipe);
-            WindowsFormsUtility.SetControlBinding(txtCalories, dtrecipe);
-            WindowsFormsUtility.SetControlBinding(txtDateDrafted, dtrecipe);
-            WindowsFormsUtility.SetControlBinding(txtDatePublished, dtrecipe);
-            WindowsFormsUtility.SetControlBinding(txtDateArchived, dtrecipe);
-            WindowsFormsUtility.SetControlBinding(txtRecipePic, dtrecipe);
-            WindowsFormsUtility.SetControlBinding(txtRecipeStatus, dtrecipe);
-           
+            WindowsFormsUtility.SetControlBinding(txtRecipeName, bindsource);
+            WindowsFormsUtility.SetControlBinding(txtCalories, bindsource);
+            WindowsFormsUtility.SetControlBinding(txtDateDrafted, bindsource);
+            WindowsFormsUtility.SetControlBinding(txtDatePublished, bindsource);
+            WindowsFormsUtility.SetControlBinding(txtDateArchived, bindsource);
+            WindowsFormsUtility.SetControlBinding(txtRecipePic, bindsource);
+            WindowsFormsUtility.SetControlBinding(txtRecipeStatus, bindsource);
 
             this.Show();
         }
 
-      
+
         private void Save()
         {
             Application.UseWaitCursor = true;

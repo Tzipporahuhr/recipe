@@ -33,6 +33,7 @@
             txtRecipeName = new TextBox();
             btnSearch = new Button();
             gRecipe = new DataGridView();
+            btnNew = new Button();
             tblMain.SuspendLayout();
             tblOptions.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)gRecipe).BeginInit();
@@ -40,17 +41,20 @@
             // 
             // tblMain
             // 
-            tblMain.ColumnCount = 1;
-            tblMain.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
+            tblMain.ColumnCount = 2;
+            tblMain.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 37.5F));
+            tblMain.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 62.5F));
             tblMain.Controls.Add(tblOptions, 0, 0);
             tblMain.Controls.Add(gRecipe, 0, 1);
+            tblMain.Controls.Add(btnNew, 1, 0);
             tblMain.Dock = DockStyle.Fill;
             tblMain.Location = new Point(0, 0);
             tblMain.Name = "tblMain";
-            tblMain.RowCount = 2;
+            tblMain.RowCount = 3;
             tblMain.RowStyles.Add(new RowStyle());
             tblMain.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
-            tblMain.Size = new Size(709, 529);
+            tblMain.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
+            tblMain.Size = new Size(910, 706);
             tblMain.TabIndex = 0;
             // 
             // tblOptions
@@ -90,17 +94,28 @@
             // gRecipe
             // 
             gRecipe.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            tblMain.SetColumnSpan(gRecipe, 2);
             gRecipe.Dock = DockStyle.Fill;
             gRecipe.Location = new Point(3, 57);
             gRecipe.Name = "gRecipe";
-            gRecipe.Size = new Size(703, 469);
+            gRecipe.Size = new Size(904, 626);
             gRecipe.TabIndex = 1;
+            // 
+            // btnNew
+            // 
+            btnNew.AutoSize = true;
+            btnNew.Location = new Point(344, 3);
+            btnNew.Name = "btnNew";
+            btnNew.Size = new Size(119, 48);
+            btnNew.TabIndex = 2;
+            btnNew.Text = "New";
+            btnNew.UseVisualStyleBackColor = true;
             // 
             // frmSearch
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(709, 529);
+            ClientSize = new Size(910, 706);
             Controls.Add(tblMain);
             Name = "frmSearch";
             Text = "Recipe Search";
@@ -119,5 +134,6 @@
         private TextBox txtRecipeName;
         private Button btnSearch;
         private DataGridView gRecipe;
+        private Button btnNew;
     }
 }
