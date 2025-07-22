@@ -47,8 +47,7 @@ namespace RecipeWinForms
                 frm.ShowForm(id);
             
         }
-      
-      private void GRecipe_CellDoubleClick(object? sender, DataGridViewCellEventArgs e)
+       private void GRecipe_CellDoubleClick(object? sender, DataGridViewCellEventArgs e)
         {
             ShowRecipeForm(e.RowIndex);
         }
