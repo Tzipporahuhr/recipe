@@ -24,10 +24,15 @@ namespace RecipeWinForms
         {
             if (recipeid == 0)
             {
-                dtrecipe = Recipe.Load(0);       
-                dtrecipe.Rows.Add();             
+                dtrecipe = Recipe.Load(0);
+                dtrecipe.Rows.Add();
+            }
+            else
+            {
+                dtrecipe = Recipe.Load(recipeid);
+            }
 
-                
+
                 txtDateDrafted.ReadOnly = true;
                 txtDateDrafted.TabStop = false;
                 txtDateDrafted.BackColor = SystemColors.Control;
@@ -39,11 +44,8 @@ namespace RecipeWinForms
                 txtDateArchived.ReadOnly = true;
                 txtDateArchived.TabStop = false;
                 txtDateArchived.BackColor = SystemColors.Control;
-            }
-            else
-            {
-                dtrecipe = Recipe.Load(recipeid);
-            }
+            
+          
 
             bindsource.DataSource = dtrecipe;
 
@@ -61,6 +63,13 @@ namespace RecipeWinForms
             WindowsFormsUtility.SetControlBinding(txtRecipePic, bindsource);
             WindowsFormsUtility.SetControlBinding(txtRecipeStatus, bindsource);
 
+            txtRecipePic.ReadOnly = true;
+            txtRecipePic.TabStop = false;
+            txtRecipePic.BackColor = SystemColors.Control;
+
+            txtRecipeStatus.ReadOnly = true;
+            txtRecipeStatus.TabStop = false;
+            txtRecipeStatus.BackColor = SystemColors.Control;
             this.Show();
         }
 

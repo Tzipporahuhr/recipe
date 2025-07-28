@@ -49,7 +49,7 @@ Create table dbo.Recipe (
     RecipeId int not null identity primary key,
     StaffId int not null constraint f_Staff_Recipe foreign key references Staff(StaffId),
     CuisineId int not null constraint f_Cuisine_Recipe foreign key references Cuisine(CuisineId),
-    RecipeName varchar(50)  not null --constraint u_Recipe_RecipeName unique
+    RecipeName varchar(50)  not null constraint u_Recipe_RecipeName unique
         constraint c_Recipe_RecipeName_cannot_be_blank check (RecipeName<> ''),
     Calories int not null
         constraint c_Recipe_Calories_bought_must_be_greater_than_zero check (calories >0),
@@ -173,10 +173,7 @@ Create table dbo.RecipeCookBook(
 )
 go
  
-     -- SELECT TOP 1 r.RecipeId, r.Calories, r.RecipeName
-     --FROM Recipe r
-     --JOIN staff s ON s.staffid = r.staffid;
- 
+     
  
    
         
