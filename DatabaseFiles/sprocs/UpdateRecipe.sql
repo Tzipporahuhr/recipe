@@ -14,16 +14,44 @@ as
 begin
 
     set @RecipeId= isnull(@RecipeId,0)  
-     
- 
+    declare @return int = 0
+
+	if isnull (Ltrim(rtrim(@RecipeName)), '') = ''
+	begin 
+	     set @return=1  ----
+		 set @Message = 'Recipe RecipeName cannot be blank'
+		 goto finished--
+end--
+
+if @Calories <=0
+begin
+	set @return=1
+	set @message= 'Recipe Calories must be greater than zero'
+	goto finished
+end
+
+if @DateDrafted >getdate()
+begin
+	set @return = 1
+	set @Message= 'Recipe DateDrafted cannot be in the future'
+goto finished
+end
+
+if @DateDrafted is not null and @DatePublished is not null
+begin
+    if @DateDrafted > @DatePublished
+    begin
+        set @return = 1;
+        set @Message = 'Recipe DateDrafted must be before DatePublished';
+        goto finished;
+    end
+end
 
 if @RecipeId= 0
 begin
 
 insert Recipe (StaffId, CuisineId, RecipeName, Calories, DateDrafted, DatePublished, DateArchived)
-       values (@StaffId, @CuisineId, @RecipeName, @Calories,
-	   Isnull(@DateDrafted, getdate()),  
-	   @DatePublished, @DateArchived)
+       values (@StaffId, @CuisineId, @RecipeName, @Calories, @DateDrafted, @DatePublished, @DateArchived)
 
 	   set @RecipeId= SCOPE_IDENTITY()
 	   end 
@@ -43,8 +71,12 @@ insert Recipe (StaffId, CuisineId, RecipeName, Calories, DateDrafted, DatePublis
       end 
 
 		 finished:
-		 return 0;
+		 return @return
 end 
 go
 
- 
+
+
+
+
+    
