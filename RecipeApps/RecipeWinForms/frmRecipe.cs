@@ -102,7 +102,8 @@ namespace RecipeWinForms
             {
                 Recipe.Delete(dtrecipe);
             }
-            catch (Exception ex)
+            
+             catch (Exception ex)
             {   if (string.IsNullOrEmpty(ex.Message))
                 {
                     MessageBox.Show("Cannot delete recipe because it is part of a meal or cookbook.", "Recipe");
