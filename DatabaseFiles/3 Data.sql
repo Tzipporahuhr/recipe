@@ -53,11 +53,11 @@ select       (select s.Staffid from Staff s where s.FirstName= 'Tzipporah'), cui
 union select (select s.Staffid from Staff s where s.FirstName= 'Peter'),     cuisineid, 'Apple Yogurt Smoothie',  50,   '1756-02-22', '1757-02-22',  '1758-02-22' from Cuisine c where c.CuisineName= 'French'
 union select (select s.Staffid from Staff s where s.FirstName= 'John'),      cuisineid, 'Cheese Bread',           100,  '1761-02-22', '1762-02-22',  '1763-02-22' from Cuisine c where c.CuisineName= 'English'
 union select (select s.Staffid from Staff s where s.FirstName= 'Hoppy'),     cuisineid, 'Butter Muffins',         150,  '1767-02-22',         null,          null from Cuisine c where c.CuisineName= 'American'
-union select (select s.Staffid from Staff s where s.FirstName= 'Sori'),      cuisineid, 'Potato Kugel',           70,          null,  '1782-02-22',          null from Cuisine c where c.CuisineName= 'English'
+union select (select s.Staffid from Staff s where s.FirstName= 'Sori'),      cuisineid, 'Potato Kugel',           70,   '1767-03-22',  '1782-02-22',          null from Cuisine c where c.CuisineName= 'English'
 union select (select s.Staffid from Staff s where s.FirstName= 'Sara'),      cuisineid, 'Pizza',                  200,  '1782-02-22', '1783-02-22',  '1784-02-22' from Cuisine c where c.CuisineName= 'American'
-union select (select s.Staffid from Staff s where s.FirstName= 'Lanny'),     cuisineid, 'French Fries',           80,          null,          null,  '1790-02-22' from Cuisine c where c.CuisineName= 'French'
+union select (select s.Staffid from Staff s where s.FirstName= 'Lanny'),     cuisineid, 'French Fries',           80,   '1767-04-22',          null,  '1790-02-22' from Cuisine c where c.CuisineName= 'French'
 union select (select s.staffid from staff s where s.FirstName='Tzipporah'),  cuisineid, 'Bread',                  90,   '1800-03-23', '1801-03-23',   '1802-04-22' from cuisine c where c.CuisineName= 'haymishe'
-union select (select s.staffid from staff s where s.FirstName='Tzipporah'),  cuisineid, 'Guacamole',              50,           null, '1801-03-23',          null  from cuisine c where c.CuisineName= 'American'
+union select (select s.staffid from staff s where s.FirstName='Tzipporah'),  cuisineid, 'Guacamole',              50,   '1768-02-22', '1801-03-23',          null  from cuisine c where c.CuisineName= 'American'
 union select (select s.staffid from staff s where s.FirstName='Sori'),       cuisineid, 'RiceCakes and Cheese',   45,   '1800-03-23', '1801-03-23',   '1802-04-22' from cuisine c where c.CuisineName= 'American'
   
  

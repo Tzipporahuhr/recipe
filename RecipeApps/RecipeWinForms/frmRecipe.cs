@@ -86,7 +86,7 @@ namespace RecipeWinForms
             catch (Exception ex)
             {
 
-             
+               string usermessage= ErrorMessages(ex.Message);
 
                 MessageBox.Show(ex.Message,"Recipe");
             }
@@ -96,6 +96,42 @@ namespace RecipeWinForms
             }
             this.Close();
 
+        }
+
+        private string ErrorMessages(string message)
+        {
+            if (message.Contains("c_Recipe_RecipeName_cannot_be_blank"))
+            {
+                return "Recipe Name cannot be blank.";
+            }
+            else if (message.Contains("u_Recipe_RecipeName"))
+            {
+                return "Recipe Name must be unique.";
+            }
+            else if (message.Contains("c_Recipe_Calories_must_be_greater_than_zero"))
+            {
+                return "Calories must be greater than zero.";
+            }
+            else if (message.Contains("f_Staff_Recipe"))
+            {
+                return "The selected staff member does not exist.";
+            }
+            else if (message.Contains("f_Cuisine_Recipe"))
+            {
+                return "The selected cuisine does not exist.";
+            }
+            else if (message.Contains("DateDrafted") && message.Contains("future"))
+            {
+                return "Drafted date cannot be in the future.";
+            }
+            else if (message.Contains("DateDrafted") && message.Contains("before"))
+            {
+                return "Drafted date must be before the published date.";
+            }
+            else
+            {
+                return message; 
+            }
         }
 
         private void Delete()

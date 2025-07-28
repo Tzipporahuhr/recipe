@@ -53,7 +53,7 @@ Create table dbo.Recipe (
         constraint c_Recipe_RecipeName_cannot_be_blank check (RecipeName<> ''),
     Calories int not null
         constraint c_Recipe_Calories_bought_must_be_greater_than_zero check (calories >0),
-    DateDrafted   date  null constraint d_Recipe_RecipeCreated default getdate(),
+    DateDrafted   date  not null constraint d_Recipe_RecipeCreated default getdate(),
                 constraint c_Recipe_DateDrafted_must_not_be_future check (DateDrafted <= GETDATE()),
     DatePublished date null
                 constraint c_Recipe_DatePublished_must_not_be_future check (DatePublished is null or DatePublished <= GETDATE()),
@@ -66,7 +66,7 @@ Create table dbo.Recipe (
      case when datearchived is not null then 'Archived'
           when datepublished is not null then 'Published'
           else 'drafted'
-          end persisted,
+          end persisted
 ) 
 go
  
@@ -174,7 +174,6 @@ Create table dbo.RecipeCookBook(
 go
  
      
- 
-   
+  
         
    
