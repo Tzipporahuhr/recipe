@@ -34,6 +34,7 @@
             btnSearch = new Button();
             gRecipe = new DataGridView();
             btnNew = new Button();
+            btnCalories = new Button();
             tblMain.SuspendLayout();
             tblOptions.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)gRecipe).BeginInit();
@@ -41,12 +42,14 @@
             // 
             // tblMain
             // 
-            tblMain.ColumnCount = 2;
-            tblMain.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 37.5F));
-            tblMain.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 62.5F));
+            tblMain.ColumnCount = 3;
+            tblMain.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
+            tblMain.ColumnStyles.Add(new ColumnStyle());
+            tblMain.ColumnStyles.Add(new ColumnStyle());
             tblMain.Controls.Add(tblOptions, 0, 0);
             tblMain.Controls.Add(gRecipe, 0, 1);
             tblMain.Controls.Add(btnNew, 1, 0);
+            tblMain.Controls.Add(btnCalories, 2, 0);
             tblMain.Dock = DockStyle.Fill;
             tblMain.Location = new Point(0, 0);
             tblMain.Name = "tblMain";
@@ -94,7 +97,7 @@
             // gRecipe
             // 
             gRecipe.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            tblMain.SetColumnSpan(gRecipe, 2);
+            tblMain.SetColumnSpan(gRecipe, 3);
             gRecipe.Dock = DockStyle.Fill;
             gRecipe.Location = new Point(3, 57);
             gRecipe.Name = "gRecipe";
@@ -104,12 +107,22 @@
             // btnNew
             // 
             btnNew.AutoSize = true;
-            btnNew.Location = new Point(344, 3);
+            btnNew.Location = new Point(662, 3);
             btnNew.Name = "btnNew";
             btnNew.Size = new Size(119, 48);
             btnNew.TabIndex = 2;
             btnNew.Text = "New";
             btnNew.UseVisualStyleBackColor = true;
+            // 
+            // btnCalories
+            // 
+            btnCalories.AutoSize = true;
+            btnCalories.Location = new Point(787, 3);
+            btnCalories.Name = "btnCalories";
+            btnCalories.Size = new Size(120, 48);
+            btnCalories.TabIndex = 3;
+            btnCalories.Text = "Calories";
+            btnCalories.UseVisualStyleBackColor = true;
             // 
             // frmSearch
             // 
@@ -135,5 +148,6 @@
         private Button btnSearch;
         private DataGridView gRecipe;
         private Button btnNew;
+        private Button btnCalories;
     }
 }

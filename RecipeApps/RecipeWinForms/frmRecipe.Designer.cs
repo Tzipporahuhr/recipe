@@ -336,9 +336,9 @@
         private ToolStrip tsMain;
         private ToolStripButton btnSave;
         private ToolStripSeparator toolStripSeparator1;
-        private ToolStripButton btnDelete;
         private ToolStripSeparator toolStripSeparator2;
         private ComboBox lstCuisineName;
         private ComboBox lstFirstName;
+        private ToolStripButton btnDelete;
     }
 }

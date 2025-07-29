@@ -51,6 +51,21 @@ namespace RecipeSystem
             return dt;
         }
 
+        public static DataTable RecipeDesc(int recipeId)
+        {
+            SqlCommand cmd= SQLUtility.GetSqlCommand("RecipeDesc");
+            SQLUtility.SetParamValue(cmd, "@RecipeId", recipeId);
+            return SQLUtility.GetDataTable(cmd);
+        }
+
+        public static int GetTotalCalories(List<int> recipeIds)
+        {
+            if (recipeIds == null || recipeIds.Count == 0) return 0;
+            string RecipeidList=string.Join(",", recipeIds);
+            string sql = $@"select sum (calories) from Recipe where RecipeId in ({RecipeidList})";
+            return SQLUtility.GetFirstColumnFirstRowValue(sql);
+        }
+
  
         public static void Save(DataTable dtrecipe)
         {
@@ -82,34 +97,9 @@ namespace RecipeSystem
                 throw new Exception(message);
             }
 
-            
-            // {     if (dtrecipe.Rows.Count == 0)
-            //     {
-            //         throw new Exception("cannot call Recipe save method because there are no rows in the Table");
-            //     } 
-            //     DataRow r = dtrecipe.Rows[0];
-            //     SQLUtility.SaveDataRow(r, "RecipeUpdate");
-            //     string sql = string.Join(Environment.NewLine, $"update recipe set",
-            //$"CuisineId='{r["CuisineId"]}',",
-            //$"StaffId='{r["StaffId"]}',",             
-            //$"RecipeName='{r["RecipeName"]}',",
-            //$"Calories='{r["Calories"]}',",
-            //$"DateDrafted='{r["DateDrafted"]}',",
-            //$"DatePublished='{r["DatePublished"]}',",
-            //$"DateArchived='{r["DateArchived"]}'",
-            //$" where recipeId=   {r["recipeId"]}");
-            //     Debug.Print("------------------");
-
-            //     try
-            //     {
-            //         SQLUtility.ExecuteSQL(sql);   
-            //     }
-            //     catch (Exception ex)
-            //     {
-            //         throw;   
-            //     }
            
         }
+
         public static void Delete(DataTable dtrecipe)
         {
             int id = (int)dtrecipe.Rows[0]["recipeId"];
