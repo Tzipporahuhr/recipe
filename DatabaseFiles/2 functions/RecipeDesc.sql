@@ -3,6 +3,7 @@ create or alter function dbo.RecipeDesc(@RecipeId int)
 returns varchar(250)
 as
 begin
+
 	declare @value varchar(250) = ''
 
 	select @value = concat(
